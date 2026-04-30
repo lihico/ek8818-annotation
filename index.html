@@ -45,9 +45,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .turn-t{border-left:3px solid var(--acc);background:#faf5ff}
 .turn-c{border-left:3px solid #94a3b8;background:transparent}
 .turn .speaker{font-weight:700;font-size:.72rem;color:var(--mut);margin-right:.35rem}
-.turn-t.ev-th{background:var(--rose);border-left-color:#e11d48;position:relative}
-.turn-t.ev-th:hover .turn-t-tip{display:block}
-.turn-t-tip{display:none;position:absolute;bottom:calc(100% + 2px);left:.55rem;background:#1e293b;color:#fff;padding:.3rem .5rem;border-radius:4px;font-size:.68rem;white-space:nowrap;z-index:30;pointer-events:none;font-weight:500}
 .ev{border-radius:2px;padding:0 1px;cursor:help;position:relative}
 .ev-a{background:var(--amber)}
 .ev-b{background:var(--green)}
@@ -174,8 +171,12 @@ function highlightSpans(text,seg){
   spans.forEach(ev=>{
     const escaped=esc(ev.span);
     const cls='ev ev-'+ev.d;
-    const adTxt = (ev.ad===null||ev.ad===undefined) ? '' : ' (adapt: '+ev.ad+'/5)';
-    const tipText = ev.cat + adTxt;
+    let tipText=ev.cat;
+    if(ev.d==='t'){
+      if(ev.q!==null && ev.q!==undefined) tipText += ' (quality: '+ev.q+'/5)';
+    }else{
+      if(ev.ad!==null && ev.ad!==undefined) tipText += ' (adapt: '+ev.ad+'/5)';
+    }
     const repl='<span class="'+cls+'">'+escaped+'<span class="ev-tip">'+tipText+'</span></span>';
     const idx=html.indexOf(escaped);
     if(idx!==-1){html=html.substring(0,idx)+repl+html.substring(idx+escaped.length);}
@@ -200,18 +201,11 @@ function renderTranscript(){
   const segsToShow=curSeg==='all'?[1,2,3]:[parseInt(curSeg)];
   segsToShow.forEach(sn=>{
     h+='<div class="seg-header" data-seg="'+sn+'">Segment '+sn+'</div>';
-    const m=SEG_META[String(sn)]||{};
-    const intType=(m.int_type&&m.int_type!=='-')?m.int_type:null;
     SEGS[String(sn)].forEach(turn=>{
-      let cls=turn.s==='T'?'turn turn-t':'turn turn-c';
-      let tip='';
-      if(turn.s==='T' && intType && domains.t){
-        cls+=' ev-th';
-        tip='<span class="turn-t-tip">Intervention type: '+intType+'</span>';
-      }
+      const cls=turn.s==='T'?'turn turn-t':'turn turn-c';
       const speaker=turn.s==='T'?'T':'P';
       const inner=highlightSpans(turn.t,sn);
-      h+='<div class="'+cls+'">'+tip+'<span class="speaker">'+speaker+'</span>'+inner+'</div>';
+      h+='<div class="'+cls+'"><span class="speaker">'+speaker+'</span>'+inner+'</div>';
     });
     h+=segMetaPills(sn);
   });
