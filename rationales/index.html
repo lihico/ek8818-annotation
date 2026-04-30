@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rationale themes annotation — Lab meeting 2026-04-30</title>
+<style>
+:root{
+  --bg:#f8fafc;--card:#fff;--brd:#e2e8f0;--txt:#1e293b;--mut:#64748b;
+  --acc:#7c3aed;--accl:#ede9fe;--grn:#16a34a;--grnl:#dcfce7;
+  --orng:#d97706;--orngl:#fed7aa;--orngb:#fff7ed;
+  --grnb:#f0fdf4;--rose:#be123c;--rosel:#ffe4e6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;overflow:hidden;height:100vh}
+.shell{display:grid;grid-template-columns:60% 40%;height:100vh}
+.lp{height:100vh;overflow-y:auto;border-right:2px solid var(--brd);background:#fff;padding:0}
+.lp-head{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--brd);padding:.7rem 1rem}
+.lp-head h1{font-size:1.05rem;font-weight:700;margin-bottom:.2rem}
+.lp-head .sub{font-size:.74rem;color:var(--mut);line-height:1.45}
+.legend{display:flex;gap:.5rem;margin-top:.5rem;flex-wrap:wrap;font-size:.7rem}
+.legend .chip{padding:.2rem .55rem;border-radius:4px;font-weight:600}
+.chip.q{background:var(--orngl);color:#92400e}
+.chip.f{background:var(--grnl);color:#166534}
+.chip.o{background:#e2e8f0;color:#475569}
+.chip.u{background:#e5e7eb;color:#475569}
+.counts{display:flex;gap:.7rem;font-size:.72rem;color:var(--mut);margin-top:.3rem;font-weight:600}
+.counts .n{color:var(--txt)}
+.rat-wrap{padding:.6rem 1rem 3rem 1rem}
+.rat{background:#fff;border:1px solid var(--brd);border-radius:8px;padding:.8rem 1rem;margin-bottom:.9rem;transition:border-color .15s}
+.rat.done{border-color:#a7f3d0;background:#f7fef9}
+.rat.unclear{border-color:#cbd5e1;background:#f8fafc;opacity:.7}
+.rat-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem}
+.rat-num{font-size:.72rem;font-weight:700;color:var(--mut);letter-spacing:.04em}
+.rat-unclear-btn{font-size:.65rem;color:var(--mut);background:none;border:1px dashed var(--brd);padding:.15rem .5rem;border-radius:4px;cursor:pointer}
+.rat-unclear-btn:hover{background:#f1f5f9}
+.rat-unclear-btn.active{background:#e5e7eb;border-style:solid;color:#475569}
+.rat-text{font-size:.94rem;line-height:1.65;user-select:text;cursor:text;padding:.2rem 0}
+.rat-text mark{padding:1px 2px;border-radius:3px;cursor:pointer;position:relative}
+.rat-text mark.q{background:var(--orngl);color:#92400e;border-bottom:2px solid var(--orng)}
+.rat-text mark.f{background:var(--grnl);color:#166534;border-bottom:2px solid var(--grn)}
+.rat-text mark.o{background:#e2e8f0;color:#475569;border-bottom:2px solid #64748b}
+.hl-list{margin-top:.55rem;display:flex;flex-direction:column;gap:.35rem}
+.hl{display:flex;align-items:center;gap:.4rem;font-size:.78rem;padding:.3rem .45rem;border-radius:6px;background:#f8fafc;border:1px solid var(--brd)}
+.hl.q{background:var(--orngb);border-color:var(--orngl)}
+.hl.f{background:var(--grnb);border-color:#bbf7d0}
+.hl.o{background:#f8fafc;border-color:#cbd5e1}
+.hl-tag{font-size:.6rem;font-weight:700;padding:.12rem .4rem;border-radius:3px;flex-shrink:0}
+.hl.q .hl-tag{background:var(--orngl);color:#92400e}
+.hl.f .hl-tag{background:var(--grnl);color:#166534}
+.hl.o .hl-tag{background:#e2e8f0;color:#475569}
+.hl-span{flex-shrink:0;max-width:40%;font-style:italic;color:var(--mut);font-size:.72rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hl-theme{flex:1;border:1px solid var(--brd);border-radius:4px;padding:.2rem .4rem;font-family:inherit;font-size:.78rem;background:#fff}
+.hl-theme:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 2px var(--accl)}
+.hl-del{background:none;border:none;color:var(--rose);font-size:1rem;cursor:pointer;padding:.15rem .25rem;line-height:1}
+.hl-del:hover{color:#9f1239}
+.tag-bar{display:flex;gap:.4rem;margin-top:.55rem;padding:.5rem;background:#f1f5f9;border:1px dashed var(--brd);border-radius:6px;align-items:center;transition:all .2s}
+.tag-bar.ready{background:#fffbeb;border-color:#fcd34d;border-style:solid;box-shadow:0 0 0 2px #fef3c7}
+.tag-bar .tb-hint{font-size:.72rem;color:var(--mut);font-weight:600;margin-right:.2rem}
+.tag-bar.ready .tb-hint{color:#92400e}
+.tag-bar button{flex:0 0 auto;padding:.4rem .8rem;border:none;border-radius:6px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;transition:transform .1s, opacity .15s;opacity:.4}
+.tag-bar.ready button{opacity:1}
+.tag-bar button:disabled{cursor:not-allowed}
+.tag-bar .btn-q{background:var(--orng);color:#fff}
+.tag-bar .btn-f{background:var(--grn);color:#fff}
+.tag-bar .btn-o{background:#64748b;color:#fff}
+.tag-bar.ready button:hover{transform:translateY(-1px)}
+.tag-bar .tb-selected{font-size:.72rem;color:var(--mut);font-style:italic;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:40%}
+.tag-bar.ready .tb-selected{color:#92400e;font-style:normal;font-weight:600}
+.sel-popup{display:none}
+.rp{height:100vh;overflow-y:auto;padding:1.1rem 1.3rem;background:var(--bg)}
+.step{background:var(--card);border:1px solid var(--brd);border-radius:10px;padding:1rem 1.1rem;margin-bottom:.9rem}
+.step h2{font-size:.95rem;font-weight:700;margin-bottom:.4rem}
+.step p{font-size:.8rem;line-height:1.55;color:var(--txt);margin-bottom:.4rem}
+.step ol{font-size:.8rem;line-height:1.6;padding-left:1.2rem;color:var(--txt)}
+.step ol li{margin-bottom:.3rem}
+.step .hint{font-size:.72rem;color:var(--mut);margin-top:.3rem;font-style:italic}
+label{display:block;font-weight:600;font-size:.78rem;margin-bottom:.25rem;margin-top:.6rem;color:var(--txt)}
+label:first-child{margin-top:0}
+input[type=text]{width:100%;border:1px solid var(--brd);border-radius:6px;padding:.4rem .55rem;font-family:inherit;font-size:.82rem}
+input[type=text]:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 2px var(--accl)}
+.exp-btn{padding:.55rem .9rem;background:var(--acc);color:#fff;border:none;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;width:100%}
+.exp-btn:hover{opacity:.92}
+.exp-btn.alt{background:#3b82f6}
+.save-status{font-size:.68rem;color:var(--grn);min-height:1em;text-align:center;margin-top:.4rem}
+.big-counts{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:.4rem;margin-top:.4rem}
+.big-counts .cbox{padding:.5rem;border-radius:6px;text-align:center}
+.cbox.q{background:var(--orngb);border:1px solid var(--orngl)}
+.cbox.f{background:var(--grnb);border:1px solid #bbf7d0}
+.cbox.o{background:#f8fafc;border:1px solid #cbd5e1}
+.cbox.u{background:#f1f5f9;border:1px solid var(--brd)}
+.cbox .num{font-size:1.3rem;font-weight:700;line-height:1.1}
+.cbox.q .num{color:#92400e}
+.cbox.f .num{color:#166534}
+.cbox.o .num{color:#475569}
+.cbox.u .num{color:#475569}
+.cbox .lab{font-size:.62rem;font-weight:600;color:var(--mut);margin-top:.15rem}
+.progress-bar{height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;margin-top:.35rem}
+.progress-bar-fill{height:100%;background:var(--grn);transition:width .3s}
+.progress-txt{font-size:.68rem;color:var(--mut);margin-top:.2rem;text-align:right}
+</style></head>
+<body>
+<div class="shell">
+<div class="lp">
+<div class="lp-head">
+<h1>Rationale themes — 50 expert rationales</h1>
+<div class="sub">Highlight parts of each rationale. Tag each highlight as <b>Quality-in-isolation</b> (judgment of the intervention by itself) or <b>Context-fit</b> (judgment of how the intervention matches this patient at this moment). Then write the theme in your own words.</div>
+<div class="legend">
+<span class="chip q">Quality-in-isolation</span>
+<span class="chip f">Context-fit</span>
+<span class="chip o">Other</span>
+<span class="chip u">Not applicable</span>
+</div>
+<div class="counts"><span>Rationales done: <span class="n" id="c-done">0</span>/50</span><span>Q: <span class="n" id="c-q">0</span></span><span>C-fit: <span class="n" id="c-f">0</span></span><span>Other: <span class="n" id="c-o">0</span></span></div>
+</div>
+<div class="rat-wrap" id="rat-wrap"></div>
+</div>
+<div class="rp">
+<div class="step">
+<h2>What to do</h2>
+<ol>
+<li>Read the rationale.</li>
+<li>Select a phrase (drag with the mouse).</li>
+<li>The three buttons under that rationale light up. Click <b>Quality</b>, <b>Context-fit</b>, or <b>Other</b> (if the phrase carries a theme that is neither quality nor fit).</li>
+<li>Write a short theme label (few words) in the text field that appears, e.g., "deep interpretation" or "used patient's words".</li>
+<li>If a whole rationale fits none of the categories, click <i>mark unclear</i>.</li>
+</ol>
+<p class="hint">Multiple highlights per rationale are fine. Same phrase can be tagged twice if it carries both judgments.</p>
+</div>
+<div class="step">
+<h2>Progress</h2>
+<div class="big-counts">
+<div class="cbox q"><div class="num" id="b-q">0</div><div class="lab">Quality</div></div>
+<div class="cbox f"><div class="num" id="b-f">0</div><div class="lab">Context-fit</div></div>
+<div class="cbox o"><div class="num" id="b-o">0</div><div class="lab">Other</div></div>
+<div class="cbox u"><div class="num" id="b-u">0</div><div class="lab">Unclear</div></div>
+</div>
+<div class="progress-bar"><div class="progress-bar-fill" id="pbf" style="width:0%"></div></div>
+<div class="progress-txt" id="pbt">0 / 50 rationales touched</div>
+</div>
+<div class="step">
+<h2>Annotator</h2>
+<label>Name</label><input type="text" id="f-name" placeholder="Your name">
+<label>Date</label><input type="text" id="f-date" placeholder="YYYY-MM-DD">
+</div>
+<div class="step">
+<h2>Export</h2>
+<button class="exp-btn" onclick="exportJSON()">Download .json</button>
+<button class="exp-btn alt" style="margin-top:.4rem" onclick="copyJSON()" id="cpBtn">Copy to clipboard</button>
+<div class="save-status" id="ss">&check; Saved locally</div>
+</div>
+</div>
+</div>
+<div class="sel-popup" id="pop"></div>
+<script src="rationales_sample_50.js"></script>
+<script src="annotation_rationales_app.js"></script>
+</body></html>
