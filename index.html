@@ -28,8 +28,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .ctx-box{margin:.5rem .8rem;padding:.6rem .8rem;background:#fafafa;border:1px solid var(--brd);border-radius:6px}
 .ctx-toggle{font-size:.76rem;font-weight:600;cursor:pointer;color:var(--mut);padding:.15rem 0}
 .ctx-content{font-size:.78rem;line-height:1.55;margin-top:.35rem}
-/* SEGMENT META STRIP */
-.seg-meta-strip{display:flex;gap:.35rem;flex-wrap:wrap;font-size:.62rem;margin-top:.3rem}
+/* SEGMENT META STRIP (footer of segment) */
+.seg-meta-strip{display:flex;gap:.35rem;flex-wrap:wrap;font-size:.62rem;margin:.6rem 0 1rem 0;padding:.45rem .6rem;background:#f8fafc;border:1px dashed var(--brd);border-radius:6px;align-items:center}
+.seg-meta-label{font-size:.6rem;color:var(--mut);font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-right:.25rem}
 .meta-pill{padding:.15rem .4rem;border-radius:4px;font-weight:600}
 .meta-pill.mlo{background:var(--accl);color:var(--acc)}
 .meta-pill.all{background:var(--bluel);color:#2563eb}
@@ -101,11 +102,17 @@ details summary{cursor:pointer;font-weight:600;font-size:.76rem;padding:.15rem 0
 </div>
 <div class="ctx-box">
 <details open>
-<summary class="ctx-toggle">Context before the working phase</summary>
-<div class="ctx-content">The patient is a young adult exploring a long-standing sense that she cannot feel emotions in ways she thinks are appropriate or expected, particularly that she does not cry in response to serious events (illness of friends' grandparents, Holocaust narratives, difficult experiences at her place of study). The session's working phase is centered on this theme: the absence of crying, and what that absence means to her.</div>
+<summary class="ctx-toggle">What happened before the working phase</summary>
+<div class="ctx-content" id="ctx-before"><!-- filled by JS --></div>
 </details>
 </div>
 <div class="tx-wrap" id="tx-wrap"><!-- filled by JS --></div>
+<div class="ctx-box" style="margin-bottom:1.2rem">
+<details>
+<summary class="ctx-toggle">What happened after the working phase</summary>
+<div class="ctx-content" id="ctx-after"><!-- filled by JS --></div>
+</details>
+</div>
 </div>
 <!-- RIGHT PANEL -->
 <div class="rp" id="rp">
@@ -178,7 +185,8 @@ function segMetaPills(sn){
   if(m.quality && m.quality!=='-') pills.push('<span class="meta-pill qu">Quality:'+m.quality+'</span>');
   if(m.alliance && m.alliance!=='-') pills.push('<span class="meta-pill all">Alliance:'+m.alliance+'</span>');
   if(m.mlo && m.mlo!=='-') pills.push('<span class="meta-pill mlo">MLO:'+m.mlo+'</span>');
-  return '<div class="seg-meta-strip">'+pills.join('')+'</div>';
+  if(!pills.length) return '';
+  return '<div class="seg-meta-strip"><span class="seg-meta-label">Segment-level ratings:</span>'+pills.join('')+'</div>';
 }
 
 function renderTranscript(){
@@ -186,13 +194,14 @@ function renderTranscript(){
   let h='';
   const segsToShow=curSeg==='all'?[1,2,3]:[parseInt(curSeg)];
   segsToShow.forEach(sn=>{
-    h+='<div class="seg-header" data-seg="'+sn+'">Segment '+sn+segMetaPills(sn)+'</div>';
+    h+='<div class="seg-header" data-seg="'+sn+'">Segment '+sn+'</div>';
     SEGS[String(sn)].forEach(turn=>{
       const cls=turn.s==='T'?'turn turn-t':'turn turn-c';
       const speaker=turn.s==='T'?'T':'P';
       const inner=highlightSpans(turn.t,sn);
       h+='<div class="'+cls+'"><span class="speaker">'+speaker+'</span>'+inner+'</div>';
     });
+    h+=segMetaPills(sn);
   });
   wrap.innerHTML=h;
 }
@@ -296,6 +305,19 @@ document.getElementById('f-feedback').addEventListener('input',()=>{updateWC();s
 document.getElementById('f-name').addEventListener('input',save);
 document.getElementById('f-date').addEventListener('input',save);
 
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function renderContext(){
+  if(typeof CONTEXT_BEFORE!=='undefined'){
+    document.getElementById('ctx-before').innerHTML=
+      escHtml(CONTEXT_BEFORE).split(/\n\n+/).map(p=>'<p style="margin-bottom:.55rem">'+p.replace(/\n/g,'<br>')+'</p>').join('');
+  }
+  if(typeof CONTEXT_AFTER!=='undefined'){
+    document.getElementById('ctx-after').innerHTML=
+      escHtml(CONTEXT_AFTER).split(/\n\n+/).map(p=>'<p style="margin-bottom:.55rem">'+p.replace(/\n/g,'<br>')+'</p>').join('');
+  }
+}
+
+renderContext();
 renderTranscript();
 load();
 updateWC();

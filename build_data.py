@@ -1,22 +1,47 @@
-"""Parse EK8818_11 transcript segments into {s: 'P'|'T', t: '...'} turns and write JS file."""
+"""Parse EK8818_11 transcript segments into {s: 'P'|'T', t: '...'} turns and write JS file.
+
+Uses the clean, timestamp-stripped, speaker-normalized segments from project_2's
+``data_for_example/EK8818_11/`` (C = client, T = therapist), plus the factual
+context_before/context_after summaries. No interpretive summaries are inlined.
+"""
 import json
 import re
 from pathlib import Path
 
+PROJ2_ROOT = Path("/Users/lihicohen/Documents/project_2/data_for_example/EK8818_11")
 SEG_FILES = {
-    1: Path("examples/session_segments/EK8818_11_seg1.txt"),
-    2: Path("examples/session_segments/EK8818_11_seg2.txt"),
-    3: Path("examples/session_segments/EK8818_11_seg3.txt"),
+    1: PROJ2_ROOT / "seg_1.txt",
+    2: PROJ2_ROOT / "seg_2.txt",
+    3: PROJ2_ROOT / "seg_3.txt",
 }
+CONTEXT_BEFORE = PROJ2_ROOT / "context_before.txt"
+CONTEXT_AFTER = PROJ2_ROOT / "context_after.txt"
 MIND_JSON = Path("experiments/annotation_EK8818/ek8818_mind.json")
 OUT = Path("experiments/annotation_EK8818/ek8818_data.js")
 
 
 def parse_turn(line: str):
-    m = re.match(r'^([PT]):\s*"(.+)"\s*$', line.strip(), flags=re.S)
+    # Clean format: [HH:MM:SS] C: "..."  or  [HH:MM:SS] T: "..."
+    m = re.match(r'^\[[^\]]+\]\s*([CT]):\s*"(.+)"\s*$', line.strip(), flags=re.S)
     if not m:
         return None
-    return {"s": m.group(1), "t": m.group(2)}
+    speaker = "P" if m.group(1) == "C" else "T"
+    return {"s": speaker, "t": m.group(2)}
+
+
+def read_context(path: Path) -> str:
+    """Strip the header lines and return just the prose body."""
+    text = path.read_text(encoding="utf-8")
+    lines = text.splitlines()
+    body = []
+    in_body = False
+    for line in lines:
+        if line.startswith("="):
+            in_body = True
+            continue
+        if in_body:
+            body.append(line)
+    return "\n".join(body).strip()
 
 
 def clean_span(span: str) -> str:
@@ -77,10 +102,12 @@ def main():
         sm["mlo"] = pov.get("Segment_Patient_Overall_Evaluation.Micro-level_outcome|", "-")
         seg_meta[s] = sm
 
-    js = "// Auto-generated from ek8818_mind.json + session_segments. Do not hand-edit.\n"
+    js = "// Auto-generated from ek8818_mind.json + clean segments in project_2. Do not hand-edit.\n"
     js += "const SEGS=" + json.dumps(segs, ensure_ascii=False) + ";\n"
     js += "const EV=" + json.dumps(evidence, ensure_ascii=False) + ";\n"
     js += "const SEG_META=" + json.dumps({str(k): v for k, v in seg_meta.items()}, ensure_ascii=False) + ";\n"
+    js += "const CONTEXT_BEFORE=" + json.dumps(read_context(CONTEXT_BEFORE)) + ";\n"
+    js += "const CONTEXT_AFTER=" + json.dumps(read_context(CONTEXT_AFTER)) + ";\n"
     OUT.write_text(js, encoding="utf-8")
     print(f"wrote {OUT}")
 
