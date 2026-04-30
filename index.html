@@ -23,6 +23,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .df-b.active{background:#16a34a;border-color:#16a34a}
 .df-c.active{background:#2563eb;border-color:#2563eb}
 .df-d.active{background:#7c3aed;border-color:#7c3aed}
+.df-t.active{background:#e11d48;border-color:#e11d48}
 .dom-legend{font-size:.6rem;color:var(--mut);margin-top:.25rem}
 /* CONTEXT */
 .ctx-box{margin:.5rem .8rem;padding:.6rem .8rem;background:#fafafa;border:1px solid var(--brd);border-radius:6px}
@@ -49,8 +50,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .ev-b{background:var(--green)}
 .ev-c{background:var(--bluel)}
 .ev-d{background:var(--accl)}
+.ev-t{background:var(--rose)}
 .ev-tip{display:none;position:absolute;bottom:100%;left:0;background:#1e293b;color:#fff;padding:.3rem .5rem;border-radius:4px;font-size:.68rem;white-space:nowrap;z-index:20;pointer-events:none;font-weight:500}
 .ev:hover .ev-tip{display:block}
+.turn-t-label{font-size:.62rem;font-weight:700;color:#be123c;background:var(--rose);border-left:3px solid #e11d48;padding:.18rem .5rem;margin-bottom:.1rem;border-radius:3px 3px 0 0;display:inline-block;text-transform:uppercase;letter-spacing:.04em}
 /* RIGHT PANEL */
 .rp{height:100vh;overflow-y:auto;padding:1.2rem 1.4rem;background:var(--bg)}
 .step{background:var(--card);border:1px solid var(--brd);border-radius:10px;padding:1rem 1.1rem;margin-bottom:1rem}
@@ -97,6 +100,7 @@ details summary{cursor:pointer;font-weight:600;font-size:.76rem;padding:.15rem 0
 <button class="df-b active" onclick="toggleDomain('b',this)">Behav</button>
 <button class="df-c active" onclick="toggleDomain('c',this)">Cog</button>
 <button class="df-d active" onclick="toggleDomain('d',this)">Desire</button>
+<button class="df-t active" onclick="toggleDomain('t',this)">Therapist</button>
 </div>
 <div class="dom-legend">Hover any highlighted span to see the MIND category + adaptivity rating.</div>
 </div>
@@ -157,7 +161,7 @@ You are a senior psychotherapy supervisor. Explain to the therapist what they di
 <!-- Data for transcript + MIND codes -->
 <script src="ek8818_data.js"></script>
 <script>
-let domains={a:true,b:true,c:true,d:true};
+let domains={a:true,b:true,c:true,d:true,t:true};
 let curSeg='all';
 let rv={};
 
@@ -181,7 +185,6 @@ function segMetaPills(sn){
   const m=SEG_META[String(sn)];
   if(!m) return '';
   const pills=[];
-  if(m.int_type && m.int_type!=='-') pills.push('<span class="meta-pill int">'+m.int_type+'</span>');
   if(m.quality && m.quality!=='-') pills.push('<span class="meta-pill qu">Quality:'+m.quality+'</span>');
   if(m.alliance && m.alliance!=='-') pills.push('<span class="meta-pill all">Alliance:'+m.alliance+'</span>');
   if(m.mlo && m.mlo!=='-') pills.push('<span class="meta-pill mlo">MLO:'+m.mlo+'</span>');
@@ -195,10 +198,18 @@ function renderTranscript(){
   const segsToShow=curSeg==='all'?[1,2,3]:[parseInt(curSeg)];
   segsToShow.forEach(sn=>{
     h+='<div class="seg-header" data-seg="'+sn+'">Segment '+sn+'</div>';
+    const m=SEG_META[String(sn)]||{};
+    const intType=(m.int_type&&m.int_type!=='-')?m.int_type:null;
+    let firstTShown=false;
     SEGS[String(sn)].forEach(turn=>{
       const cls=turn.s==='T'?'turn turn-t':'turn turn-c';
       const speaker=turn.s==='T'?'T':'P';
       const inner=highlightSpans(turn.t,sn);
+      if(turn.s==='T' && intType && domains.t && !firstTShown){
+        const tipText='Segment-level therapist intervention type';
+        h+='<div class="turn-t-label" title="'+tipText+'">Therapist intervention type: '+intType+'</div>';
+        firstTShown=true;
+      }
       h+='<div class="'+cls+'"><span class="speaker">'+speaker+'</span>'+inner+'</div>';
     });
     h+=segMetaPills(sn);
@@ -216,7 +227,7 @@ function showSeg(s,btn){
 function toggleDomain(d,btn){
   if(d==='all'){
     const allOn=Object.values(domains).every(v=>v);
-    ['a','b','c','d'].forEach(k=>domains[k]=!allOn);
+    ['a','b','c','d','t'].forEach(k=>domains[k]=!allOn);
     document.querySelectorAll('.domain-filters button').forEach(b=>{
       if(!allOn) b.classList.add('active'); else b.classList.remove('active');
     });
