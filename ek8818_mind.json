@@ -1,0 +1,330 @@
+{
+  "session": "EK8818_11",
+  "evidence": [
+    {
+      "seg": 2,
+      "dom": "a",
+      "span": "it's a place of lack of control, but it's emotions that are so strong that they come in a physical form in a way that you can't control",
+      "cat": "(2) Anxious/ fearful/ tense",
+      "ad": null,
+      "q": null,
+      "type": null,
+      "layer": "Evidence_Patient_A"
+    },
+    {
+      "seg": 3,
+      "dom": "a",
+      "span": "I'm uncomfortable with the fact that everyone around feels bad",
+      "cat": "(2) Anxious/ fearful/ tense",
+      "ad": 3,
+      "q": null,
+      "type": null,
+      "layer": "Evidence_Patient_A"
+    },
+    {
+      "seg": 3,
+      "dom": "a",
+      "span": "I have a hard time with the atmosphere of emotion in the room when I don't feel part",
+      "cat": "(2) Anxious/ fearful/ tense",
+      "ad": 2,
+      "q": null,
+      "type": null,
+      "layer": "Evidence_Patient_A"
+    },
+    {
+      "seg": 3,
+      "dom": "b",
+      "span": "I really tried to lighten the atmosphere and try to see how to calm her down.",
+      "cat": "(1) Relating behavior",
+      "ad": 4,
+      "q": null,
+      "type": null,
+      "layer": "Evidence_Patient_B-O"
+    },
+    {
+      "seg": 3,
+      "dom": "b",
+      "span": "in heated debates so I usually Trying to lighten the atmosphere when I use people who are too angry, too sad {filler}",
+      "cat": "(2) Fight or flight behavior",
+      "ad": 3,
+      "q": null,
+      "type": null,
+      "layer": "Evidence_Patient_B-O"
+    },
+    {
+      "seg": 3,
+      "dom": "b",
+      "span": "I always try to find the place of the middle so that everyone will be satisfied so that no one will feel bad",
+      "cat": "(1) Relating behavior",
+      "ad": 4,
+      "q": null,
+      "type": null,
+      "layer": "Evidence_Patient_B-O"
+    },
+    {
+      "seg": 2,
+      "dom": "b",
+      "span": "I don't feel like I'm trying to stay in control but the opposite in places I'm trying as if I'm trying to get out of control",
+      "cat": "(1) Self care and improvement",
+      "ad": 3,
+      "q": null,
+      "type": null,
+      "layer": "Evidence_Patient_B-S"
+    },
+    {
+      "seg": 3,
+      "dom": "c",
+      "span": "She also told me that she's very open that it's not going to calm down and she's like she's going to feel what she's feeling now",
+      "cat": "(4) Perception of the other as blocking autonomy needs",
+      "ad": 3,
+      "q": null,
+      "type": null,
+      "layer": "Evidence_Patient_C-O"
+    },
+    {
+      "seg": 1,
+      "dom": "c",
+      "span": "if we saw all kinds of things these are things that are very objective hard and we hear hard stories and it's like it doesn't move {the hum}  I don't know what causes it I don't know if there was a stage in my life when I decided to block some emotion so as not to feel it and then I couldn't get it back",
+      "cat": "(2) Self criticism",
+      "ad": 2,
+      "q": null,
+      "type": null,
+      "layer": "Evidence_Patient_C-S"
+    },
+    {
+      "seg": 1,
+      "dom": "c",
+      "span": "I had a really hard time until I started to cry It was very amazing that it happened",
+      "cat": "(1) Self-acceptance and compassion",
+      "ad": 4,
+      "q": null,
+      "type": null,
+      "layer": "Evidence_Patient_C-S"
+    },
+    {
+      "seg": 2,
+      "dom": "c",
+      "span": "how can it be that you feel so bad and you don't Crying so do you really feel bad",
+      "cat": "(2) Self criticism",
+      "ad": 2,
+      "q": null,
+      "type": null,
+      "layer": "Evidence_Patient_C-S"
+    },
+    {
+      "seg": 1,
+      "dom": "d",
+      "span": "her grandmother will die and I won't know how and I'll have to deal with an emotion that I don't feel right now like an emotion that I know I'm supposed to feel",
+      "cat": "(6) Expectation that competence needs will not be met",
+      "ad": 3,
+      "q": null,
+      "type": null,
+      "layer": "Evidence_Patient_D"
+    },
+    {
+      "seg": 1,
+      "dom": "d",
+      "span": "So it's something terribly annoying, it's something I'd really like to have because this thought of what's wrong with what I'm feeling doesn't do me any good",
+      "cat": "(6) Expectation that competence needs will not be met",
+      "ad": 3,
+      "q": null,
+      "type": null,
+      "layer": "Evidence_Patient_D"
+    },
+    {
+      "seg": 2,
+      "dom": "d",
+      "span": "I mean not necessarily to see that I'm crying but to see that I cried {the hum} - 00:47:40- And it really gives legitimacy, it shows that I feel, it proves to the outside that I feel",
+      "cat": "(5) Competence, self esteem, self-care",
+      "ad": 4,
+      "q": null,
+      "type": null,
+      "layer": "Evidence_Patient_D"
+    },
+    {
+      "seg": 2,
+      "dom": "d",
+      "span": "I have to prove to the outside that I'm fine and if I cry it proves it and if I can't cry then It means something is wrong with me so it's something I have to hide",
+      "cat": "(6) Expectation that competence needs will not be met",
+      "ad": null,
+      "q": null,
+      "type": null,
+      "layer": "Evidence_Patient_D"
+    },
+    {
+      "seg": 3,
+      "dom": "d",
+      "span": "wants to get along well with everyone and that no one will be angry with me.",
+      "cat": "(3) Autonomy and adaptive control",
+      "ad": null,
+      "q": null,
+      "type": null,
+      "layer": "Evidence_Patient_D"
+    },
+    {
+      "seg": 3,
+      "dom": "d",
+      "span": "I want people not to be angry, not to be sad, always try to balance the situation somehow {filler}  so let's say something that I really pushed today I felt the need to throw a joke in the air that which was not suitable",
+      "cat": "(4) Expectation that autonomy needs will not be met",
+      "ad": 2,
+      "q": null,
+      "type": null,
+      "layer": "Evidence_Patient_D"
+    }
+  ],
+  "segment_meta": {
+    "1": {
+      "Segment_Dyad_rating": {
+        "Segment_Dyad_rating.Alliance/Reciprocity|": "4",
+        "Segment_Dyad_rating.Tension/rupture_type|": "",
+        "Segment_Dyad_rating.Tension/rupture_level|": "1",
+        "Segment_Dyad_rating.Patient_response_to_Therapist_emotion|": "3",
+        "Segment_Dyad_rating.Therapist_response_to_Patient_emotion|": "4"
+      },
+      "Segment_Patient_A": {
+        "Segment_Patient_A.Category|1": "(8) Apathic, don’t care, blunted",
+        "Segment_Patient_A.Presence|1": "4",
+        "Segment_Patient_A.Adaptivity|1": "2",
+        "Segment_Patient_A.Category|2": "(3) Sad, emotional pain, grieving",
+        "Segment_Patient_A.Presence|2": "2",
+        "Segment_Patient_A.Adaptivity|2": "4"
+      },
+      "Segment_Patient_B-O": {
+        "Segment_Patient_B-O.Category|1": "(2) Fight or flight behavior",
+        "Segment_Patient_B-O.Presence|1": "4",
+        "Segment_Patient_B-O.Adaptivity|1": "2",
+        "Segment_Patient_B-O.Other_person_name|1": "friend"
+      },
+      "Segment_Patient_C-S": {
+        "Segment_Patient_C-S.Category|1": "(2) Self criticism",
+        "Segment_Patient_C-S.Presence|1": "4",
+        "Segment_Patient_C-S.Adaptivity|1": "2",
+        "Segment_Patient_C-S.Category|2": "(1) Self-acceptance and compassion",
+        "Segment_Patient_C-S.Presence|2": "2",
+        "Segment_Patient_C-S.Adaptivity|2": "4"
+      },
+      "Segment_Patient_D": {
+        "Segment_Patient_D.Category|1": "(6) Expectation that competence needs will not be met",
+        "Segment_Patient_D.Presence|1": "4",
+        "Segment_Patient_D.Adaptivity|1": "3",
+        "Segment_Patient_D.Category|2": "(5) Competence, self esteem, self-care",
+        "Segment_Patient_D.Presence|2": "2",
+        "Segment_Patient_D.Adaptivity|2": "4"
+      },
+      "Segment_Patient_Overall_Evaluation": {
+        "Segment_Patient_Overall_Evaluation.Experiencing_and_regulation|": "2",
+        "Segment_Patient_Overall_Evaluation.Insight/reflection/mindfulness/understanding|": "3",
+        "Segment_Patient_Overall_Evaluation.Micro-level_outcome|": "5"
+      },
+      "Segment_Summary": {
+        "Segment_Summary.Main_topics_discussed|": "The patient shares his difficulty in feeling emotions, the emotional distance he experiences even when he is exposed to events that are difficult and sad, which should evoke corresponding emotions in him",
+        "Segment_Summary.Self_state(s)|": "The patient has an expectation that his competence needs will not be met, that he cannot feel the proper emotions, and identify with the pain of others. In response to this, he is critical of himself.",
+        "Segment_Summary.Interventions|": "The therapist mainly asks exploratory questions to expand the patient's emotions and thoughts.",
+        "Segment_Summary.Relationships|": "The patient-therapist relationship appears to be  positive and recpectful.The therapist is actively attentive to the patient,, and the patient responds to the expanding interventions that the therapist provides",
+        "Segment_Summary.Patient’s_micro-level_outcome|": "the levels of insight  in this segment are well, and that his overall level of expiriencing is low is relatively good.",
+        "Segment_Summary.Context|": "The patient says that he is afraid that his good friend's grandmother will die and he did not know how to feel about it",
+        "Segment_Summary.Additional_comments_(optional)|": ""
+      },
+      "Segment_Therapist_rating": {
+        "Segment_Therapist_rating.Intervention_type|": "(4) Exploratory",
+        "Segment_Therapist_rating.Focus|": "",
+        "Segment_Therapist_rating.Typicality|": "4",
+        "Segment_Therapist_rating.Quality|": "3"
+      }
+    },
+    "2": {
+      "Segment_Dyad_rating": {
+        "Segment_Dyad_rating.Alliance/Reciprocity|": "4",
+        "Segment_Dyad_rating.Tension/rupture_type|": "",
+        "Segment_Dyad_rating.Tension/rupture_level|": "1",
+        "Segment_Dyad_rating.Patient_response_to_Therapist_emotion|": "4",
+        "Segment_Dyad_rating.Therapist_response_to_Patient_emotion|": "4"
+      },
+      "Segment_Patient_A": {
+        "Segment_Patient_A.Category|1": "(3) Sad, emotional pain, grieving",
+        "Segment_Patient_A.Presence|1": "2",
+        "Segment_Patient_A.Adaptivity|1": "3",
+        "Segment_Patient_A.Category|2": "(8) Apathic, don’t care, blunted",
+        "Segment_Patient_A.Presence|2": "2",
+        "Segment_Patient_A.Adaptivity|2": "2"
+      },
+      "Segment_Patient_B-O": {
+        "Segment_Patient_B-O.Category|1": "(1) Relating behavior",
+        "Segment_Patient_B-O.Presence|1": "3",
+        "Segment_Patient_B-O.Adaptivity|1": "3",
+        "Segment_Patient_B-O.Other_person_name|1": "friend"
+      },
+      "Segment_Patient_C-S": {
+        "Segment_Patient_C-S.Category|1": "(1) Self-acceptance and compassion",
+        "Segment_Patient_C-S.Presence|1": "2",
+        "Segment_Patient_C-S.Adaptivity|1": "3",
+        "Segment_Patient_C-S.Category|2": "(2) Self criticism",
+        "Segment_Patient_C-S.Presence|2": "3",
+        "Segment_Patient_C-S.Adaptivity|2": "2"
+      },
+      "Segment_Patient_D": {
+        "Segment_Patient_D.Category|1": "(5) Competence, self esteem, self-care",
+        "Segment_Patient_D.Presence|1": "3",
+        "Segment_Patient_D.Adaptivity|1": "3",
+        "Segment_Patient_D.Category|2": "(6) Expectation that competence needs will not be met",
+        "Segment_Patient_D.Presence|2": "2",
+        "Segment_Patient_D.Adaptivity|2": "2"
+      },
+      "Segment_Summary": {
+        "Segment_Summary.Main_topics_discussed|": "The patient's dominant self-state includes his wish to be able to express his emotions, while giving legitimacy to the expression of it. This is talked also in the context of the patient's trying to relate to others. The self-state that includes his expectations for his inability to express and connect emotionally, is also expressed in this segment but to a lesser extent.",
+        "Segment_Summary.Self_state(s)|": "The patient's dominant self-state includes his wish to be able to express his emotions, while giving legitimacy to the expression of it. This is talked also in the context of the patient's trying to relate to others. The self-state that includes his expectations for his inability to express and connect emotionally, is also expressed in this segment but to a lesser extent.",
+        "Segment_Summary.Interventions|": "The therapist understands the patient's experience and provides meaning his tendency to hold back his emotions. The quality of the interventions is moderate. The therapist does not encourage the patient to express his emotions. Amplifying the patient's expression of emotions and providing legitimacy to it, could have been helpful.",
+        "Segment_Summary.Relationships|": "The relationship between the patient and therapist appears positive, the dialog is fluint' the claint reacts positiv to the intervation.",
+        "Segment_Summary.Patient’s_micro-level_outcome|": "the levels of regulation and insight of the patient in this segment are well, and that his overall level of well-being is relatively good.",
+        "Segment_Summary.Context|": "",
+        "Segment_Summary.Additional_comments_(optional)|": ""
+      },
+      "Segment_Therapist_rating": {
+        "Segment_Therapist_rating.Intervention_type|": "(5) Meaning making",
+        "Segment_Therapist_rating.Focus|": "",
+        "Segment_Therapist_rating.Typicality|": "3",
+        "Segment_Therapist_rating.Quality|": "4"
+      }
+    },
+    "3": {
+      "Segment_Dyad_rating": {
+        "Segment_Dyad_rating.Alliance/Reciprocity|": "3",
+        "Segment_Dyad_rating.Tension/rupture_type|": "",
+        "Segment_Dyad_rating.Tension/rupture_level|": "1",
+        "Segment_Dyad_rating.Patient_response_to_Therapist_emotion|": "3",
+        "Segment_Dyad_rating.Therapist_response_to_Patient_emotion|": "3"
+      },
+      "Segment_Patient_A": {
+        "Segment_Patient_A.Category|1": "(8) Apathic, don’t care, blunted",
+        "Segment_Patient_A.Presence|1": "3",
+        "Segment_Patient_A.Adaptivity|1": "2"
+      },
+      "Segment_Patient_B-O": {
+        "Segment_Patient_B-O.Category|1": "(4) Over controlled or controlling behavior",
+        "Segment_Patient_B-O.Presence|1": "4",
+        "Segment_Patient_B-O.Adaptivity|1": "2",
+        "Segment_Patient_B-O.Other_person_name|1": ""
+      },
+      "Segment_Patient_D": {
+        "Segment_Patient_D.Category|1": "(4) Expectation that autonomy needs will not be met",
+        "Segment_Patient_D.Presence|1": "3",
+        "Segment_Patient_D.Adaptivity|1": "2"
+      },
+      "Segment_Summary": {
+        "Segment_Summary.Main_topics_discussed|": "The patient presents situations in which he feels the need to lighten the atmosphere or find a compromise. When other people are very sad or angry he feels very uncomfortable and wants to change the atmosphere. The patient states that this desire probably comes from his father.",
+        "Segment_Summary.Self_state(s)|": "The patient desires for ability to assist people, resolve conflicts, and offer support during challenging times. It appears that sometimes the other accept his help, while at other times, they blokes it. Situations where people are sad or angry make discomfort and a tendency in him to immediately lighten the atmosphere through a fight reaction.",
+        "Segment_Summary.Interventions|": "The therapist asks exploratory questions to deeper into the patient's emotions and thoughts, helping to give meaning to his feelings and reactions, , reflecting his desires and connecting current experiences with past ones.",
+        "Segment_Summary.Relationships|": "The patient-therapist relationship appears to be quite positive and open; the therapist is actively attentive to the patient, supports him, and the patient responds to the expanding interventions that the therapist provides",
+        "Segment_Summary.Patient’s_micro-level_outcome|": "It seems that the levels of regulation and insight of the patient in this segment are well, and that his overall level of well-being is relatively good.",
+        "Segment_Summary.Context|": "",
+        "Segment_Summary.Additional_comments_(optional)|": ""
+      },
+      "Segment_Therapist_rating": {
+        "Segment_Therapist_rating.Intervention_type|": "(4) Exploratory",
+        "Segment_Therapist_rating.Focus|": "",
+        "Segment_Therapist_rating.Typicality|": "4",
+        "Segment_Therapist_rating.Quality|": "3"
+      }
+    }
+  }
+}

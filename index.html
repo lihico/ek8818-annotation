@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EK8818 Session 11 — Supervisor Annotation</title>
+<style>
+:root{--bg:#f8fafc;--card:#fff;--brd:#e2e8f0;--txt:#1e293b;--mut:#64748b;--acc:#7c3aed;--accl:#ede9fe;--grn:#16a34a;--warn:#f59e0b;--warnl:#fef3c7;--blue:#3b82f6;--bluel:#dbeafe;--rose:#ffe4e6;--green:#dcfce7;--amber:#fef3c7}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;overflow:hidden;height:100vh}
+.shell{display:grid;grid-template-columns:55% 45%;height:100vh}
+.lp{height:100vh;overflow-y:auto;border-right:2px solid var(--brd);background:#fff;padding:0}
+.lp-head{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--brd);padding:.5rem .8rem}
+.lp-head h1{font-size:1rem;font-weight:700;margin-bottom:.2rem}
+.lp-head .sub{font-size:.72rem;color:var(--mut)}
+.seg-tabs{display:flex;gap:.25rem;margin-top:.5rem}
+.seg-tabs button{padding:.25rem .7rem;border:1px solid var(--brd);border-radius:6px;background:#fff;cursor:pointer;font-size:.76rem;color:var(--mut);font-weight:500}
+.seg-tabs button:hover{border-color:var(--acc);color:var(--acc)}
+.seg-tabs button.active{background:var(--acc);color:#fff;border-color:var(--acc)}
+.domain-filters{display:flex;gap:.25rem;margin-top:.4rem;flex-wrap:wrap}
+.domain-filters button{padding:.2rem .5rem;border:1px solid var(--brd);border-radius:4px;background:#fff;cursor:pointer;font-size:.65rem;font-weight:600;transition:all .15s;color:var(--mut)}
+.domain-filters button.active{font-weight:700;color:#fff}
+.df-all.active{background:var(--mut);border-color:var(--mut)}
+.df-a.active{background:#d97706;border-color:#d97706}
+.df-b.active{background:#16a34a;border-color:#16a34a}
+.df-c.active{background:#2563eb;border-color:#2563eb}
+.df-d.active{background:#7c3aed;border-color:#7c3aed}
+.dom-legend{font-size:.6rem;color:var(--mut);margin-top:.25rem}
+/* CONTEXT */
+.ctx-box{margin:.5rem .8rem;padding:.6rem .8rem;background:#fafafa;border:1px solid var(--brd);border-radius:6px}
+.ctx-toggle{font-size:.76rem;font-weight:600;cursor:pointer;color:var(--mut);padding:.15rem 0}
+.ctx-content{font-size:.78rem;line-height:1.55;margin-top:.35rem}
+/* SEGMENT META STRIP */
+.seg-meta-strip{display:flex;gap:.35rem;flex-wrap:wrap;font-size:.62rem;margin-top:.3rem}
+.meta-pill{padding:.15rem .4rem;border-radius:4px;font-weight:600}
+.meta-pill.mlo{background:var(--accl);color:var(--acc)}
+.meta-pill.all{background:var(--bluel);color:#2563eb}
+.meta-pill.int{background:#fef3c7;color:#92400e}
+.meta-pill.qu{background:#e0e7ff;color:#4338ca}
+/* TRANSCRIPT */
+.tx-wrap{padding:.4rem .8rem 2rem .8rem}
+.seg-header{display:flex;align-items:center;gap:.5rem;margin-top:.7rem;margin-bottom:.4rem;padding:.4rem .6rem;background:#f1f5f9;border-radius:6px;font-size:.82rem;font-weight:700}
+.seg-header:first-child{margin-top:0}
+.turn{margin-bottom:.35rem;padding:.3rem .55rem;border-radius:4px;font-size:.82rem;line-height:1.6}
+.turn-t{border-left:3px solid var(--acc);background:#faf5ff}
+.turn-c{border-left:3px solid #94a3b8;background:transparent}
+.turn .speaker{font-weight:700;font-size:.72rem;color:var(--mut);margin-right:.35rem}
+.ev{border-radius:2px;padding:0 1px;cursor:help;position:relative}
+.ev-a{background:var(--amber)}
+.ev-b{background:var(--green)}
+.ev-c{background:var(--bluel)}
+.ev-d{background:var(--accl)}
+.ev-tip{display:none;position:absolute;bottom:100%;left:0;background:#1e293b;color:#fff;padding:.3rem .5rem;border-radius:4px;font-size:.68rem;white-space:nowrap;z-index:20;pointer-events:none;font-weight:500}
+.ev:hover .ev-tip{display:block}
+/* RIGHT PANEL */
+.rp{height:100vh;overflow-y:auto;padding:1.2rem 1.4rem;background:var(--bg)}
+.step{background:var(--card);border:1px solid var(--brd);border-radius:10px;padding:1rem 1.1rem;margin-bottom:1rem}
+.step h2{font-size:.95rem;font-weight:700;margin-bottom:.3rem}
+.prompt-box{background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;padding:.9rem 1rem;font-size:.9rem;line-height:1.65;color:#14532d}
+label{display:block;font-weight:600;font-size:.8rem;margin-bottom:.25rem;margin-top:.8rem;color:var(--txt)}
+label:first-child{margin-top:0}
+.identity-row{display:flex;gap:.6rem;flex-wrap:wrap}
+.identity-row>div{flex:1;min-width:120px}
+input[type=text]{width:100%;border:1px solid var(--brd);border-radius:6px;padding:.4rem .55rem;font-family:inherit;font-size:.82rem}
+input[type=text]:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 2px var(--accl)}
+textarea{width:100%;border:1px solid var(--brd);border-radius:6px;padding:.5rem;font-family:inherit;font-size:.85rem;resize:vertical;min-height:240px;line-height:1.55}
+textarea:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 2px var(--accl)}
+.word-count{font-size:.7rem;color:var(--mut);text-align:right;margin-top:.2rem}
+.word-count.over{color:#dc2626;font-weight:600}
+.rc{display:flex;gap:.3rem;margin-top:.3rem}
+.rb{flex:1;padding:.55rem .25rem;border:1.5px solid var(--brd);border-radius:8px;background:#fff;cursor:pointer;text-align:center;transition:all .15s}
+.rb:hover{border-color:var(--acc)}
+.rb.sel{border-color:var(--acc);background:var(--accl)}
+.rb .sc{font-size:1.05rem;font-weight:700;display:block}
+.rb .lb{font-size:.6rem;color:var(--mut);display:block;margin-top:.15rem}
+.exp-btn{padding:.55rem .9rem;background:var(--acc);color:#fff;border:none;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer}
+.exp-btn:hover{opacity:.9}
+.save-status{font-size:.68rem;color:var(--grn);min-height:1em;text-align:center;margin-top:.4rem}
+details summary{cursor:pointer;font-weight:600;font-size:.76rem;padding:.15rem 0}
+.hint-note{font-size:.72rem;color:var(--mut);margin-top:.25rem;font-style:italic}
+</style></head>
+<body>
+<div class="shell">
+<!-- LEFT PANEL -->
+<div class="lp" id="lp">
+<div class="lp-head">
+<h1>EK8818, Session 11</h1>
+<div class="sub">Working phase (3 segments) &middot; Patient: young adult, MDD &middot; Theme: inability to cry / feel emotions</div>
+<div class="seg-tabs" id="seg-tabs">
+<button class="active" onclick="showSeg('all',this)">All</button>
+<button onclick="showSeg(1,this)">Seg 1</button>
+<button onclick="showSeg(2,this)">Seg 2</button>
+<button onclick="showSeg(3,this)">Seg 3</button>
+</div>
+<div class="domain-filters">
+<button class="df-all active" onclick="toggleDomain('all',this)">All</button>
+<button class="df-a active" onclick="toggleDomain('a',this)">Affect</button>
+<button class="df-b active" onclick="toggleDomain('b',this)">Behav</button>
+<button class="df-c active" onclick="toggleDomain('c',this)">Cog</button>
+<button class="df-d active" onclick="toggleDomain('d',this)">Desire</button>
+</div>
+<div class="dom-legend">Hover any highlighted span to see the MIND category + adaptivity rating.</div>
+</div>
+<div class="ctx-box">
+<details open>
+<summary class="ctx-toggle">Context before the working phase</summary>
+<div class="ctx-content">The patient is a young adult exploring a long-standing sense that she cannot feel emotions in ways she thinks are appropriate or expected, particularly that she does not cry in response to serious events (illness of friends' grandparents, Holocaust narratives, difficult experiences at her place of study). The session's working phase is centered on this theme: the absence of crying, and what that absence means to her.</div>
+</details>
+</div>
+<div class="tx-wrap" id="tx-wrap"><!-- filled by JS --></div>
+</div>
+<!-- RIGHT PANEL -->
+<div class="rp" id="rp">
+<div class="step">
+<h2>Supervision task</h2>
+<div class="prompt-box">
+You are a senior psychotherapy supervisor. Explain to the therapist what they did well in this part of the session. Use only what you can see in the transcript and the MIND annotations on the left.
+</div>
+<div class="identity-row" style="margin-top:.8rem">
+<div><label>Name</label><input type="text" id="f-name" placeholder="e.g., Dana"></div>
+<div><label>Date</label><input type="text" id="f-date" placeholder="YYYY-MM-DD"></div>
+</div>
+</div>
+
+<div class="step">
+<h2>Your feedback to the therapist</h2>
+<textarea id="f-feedback" placeholder="Write up to ~300 words. Focus on what the therapist did well. Ground in what you see in the transcript and MIND codes."></textarea>
+<div class="word-count" id="wc">0 / 300 words</div>
+<div class="hint-note">Soft limit: 300 words.</div>
+</div>
+
+<div class="step">
+<h2>Overall rating</h2>
+<label style="margin-top:.1rem">How well did the therapist respond in this working phase?</label>
+<div class="rc" data-field="score">
+<button class="rb" onclick="sel(this)"><span class="sc">1</span><span class="lb">Poor</span></button>
+<button class="rb" onclick="sel(this)"><span class="sc">2</span><span class="lb">Limited</span></button>
+<button class="rb" onclick="sel(this)"><span class="sc">3</span><span class="lb">Mixed</span></button>
+<button class="rb" onclick="sel(this)"><span class="sc">4</span><span class="lb">Good</span></button>
+<button class="rb" onclick="sel(this)"><span class="sc">5</span><span class="lb">Excellent</span></button>
+</div>
+</div>
+
+<div style="display:flex;gap:.4rem;margin-bottom:.3rem">
+<button class="exp-btn" onclick="exportData()" style="flex:1">Download .txt</button>
+<button class="exp-btn" onclick="copyAll()" style="flex:1;background:#3b82f6" id="cpBtn">Copy to clipboard</button>
+</div>
+<div class="save-status" id="ss">&check; Saved locally</div>
+</div>
+</div>
+
+<!-- Data for transcript + MIND codes -->
+<script src="ek8818_data.js"></script>
+<script>
+let domains={a:true,b:true,c:true,d:true};
+let curSeg='all';
+let rv={};
+
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function highlightSpans(text,seg){
+  let html=esc(text);
+  const spans=EV.filter(e=>e.seg===seg && domains[e.d]).sort((a,b)=>b.span.length-a.span.length);
+  spans.forEach(ev=>{
+    const escaped=esc(ev.span);
+    const cls='ev ev-'+ev.d;
+    const adTxt = (ev.ad===null||ev.ad===undefined) ? '' : ' (adapt: '+ev.ad+'/5)';
+    const tipText = ev.cat + adTxt;
+    const repl='<span class="'+cls+'">'+escaped+'<span class="ev-tip">'+tipText+'</span></span>';
+    const idx=html.indexOf(escaped);
+    if(idx!==-1){html=html.substring(0,idx)+repl+html.substring(idx+escaped.length);}
+  });
+  return html;
+}
+
+function segMetaPills(sn){
+  const m=SEG_META[String(sn)];
+  if(!m) return '';
+  const pills=[];
+  if(m.int_type && m.int_type!=='-') pills.push('<span class="meta-pill int">'+m.int_type+'</span>');
+  if(m.quality && m.quality!=='-') pills.push('<span class="meta-pill qu">Quality:'+m.quality+'</span>');
+  if(m.alliance && m.alliance!=='-') pills.push('<span class="meta-pill all">Alliance:'+m.alliance+'</span>');
+  if(m.mlo && m.mlo!=='-') pills.push('<span class="meta-pill mlo">MLO:'+m.mlo+'</span>');
+  return '<div class="seg-meta-strip">'+pills.join('')+'</div>';
+}
+
+function renderTranscript(){
+  const wrap=document.getElementById('tx-wrap');
+  let h='';
+  const segsToShow=curSeg==='all'?[1,2,3]:[parseInt(curSeg)];
+  segsToShow.forEach(sn=>{
+    h+='<div class="seg-header" data-seg="'+sn+'">Segment '+sn+segMetaPills(sn)+'</div>';
+    SEGS[String(sn)].forEach(turn=>{
+      const cls=turn.s==='T'?'turn turn-t':'turn turn-c';
+      const speaker=turn.s==='T'?'T':'P';
+      const inner=highlightSpans(turn.t,sn);
+      h+='<div class="'+cls+'"><span class="speaker">'+speaker+'</span>'+inner+'</div>';
+    });
+  });
+  wrap.innerHTML=h;
+}
+
+function showSeg(s,btn){
+  curSeg=s;
+  document.querySelectorAll('.seg-tabs button').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  renderTranscript();
+}
+
+function toggleDomain(d,btn){
+  if(d==='all'){
+    const allOn=Object.values(domains).every(v=>v);
+    ['a','b','c','d'].forEach(k=>domains[k]=!allOn);
+    document.querySelectorAll('.domain-filters button').forEach(b=>{
+      if(!allOn) b.classList.add('active'); else b.classList.remove('active');
+    });
+  }else{
+    domains[d]=!domains[d];
+    btn.classList.toggle('active');
+    const allBtn=document.querySelector('.df-all');
+    if(Object.values(domains).every(v=>v)) allBtn.classList.add('active');
+    else allBtn.classList.remove('active');
+  }
+  renderTranscript();
+}
+
+function sel(btn){
+  btn.closest('.rc').querySelectorAll('.rb').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  const field=btn.closest('[data-field]');
+  if(field) rv[field.dataset.field]=btn.querySelector('.sc').textContent.trim();
+  save();
+}
+
+// Word count
+function updateWC(){
+  const ta=document.getElementById('f-feedback');
+  const words=ta.value.trim()?ta.value.trim().split(/\s+/).length:0;
+  const el=document.getElementById('wc');
+  el.textContent=words+' / 300 words';
+  el.classList.toggle('over',words>300);
+}
+
+// Save / load
+const KEY='ek8818_supervisor_annotation';
+function v(id){var e=document.getElementById(id);return e?e.value:'';}
+function save(){
+  const d={f:{name:v('f-name'),date:v('f-date'),feedback:v('f-feedback')},rv:rv};
+  try{localStorage.setItem(KEY,JSON.stringify(d));
+  const ss=document.getElementById('ss');ss.style.visibility='visible';}catch(e){}
+}
+function load(){
+  const raw=localStorage.getItem(KEY);if(!raw)return;
+  try{
+    const d=JSON.parse(raw);
+    if(d.f){
+      if(d.f.name) document.getElementById('f-name').value=d.f.name;
+      if(d.f.date) document.getElementById('f-date').value=d.f.date;
+      if(d.f.feedback) document.getElementById('f-feedback').value=d.f.feedback;
+    }
+    if(d.rv){
+      rv=d.rv;
+      if(rv.score){
+        document.querySelectorAll('.rc[data-field="score"] .rb').forEach(b=>{
+          if(b.querySelector('.sc').textContent.trim()===rv.score) b.classList.add('sel');
+        });
+      }
+    }
+    updateWC();
+  }catch(e){console.error(e);}
+}
+
+function buildTxt(){
+  return [
+    'EK8818 Session 11 — Supervisor Annotation',
+    '='.repeat(50),
+    'Annotator: '+v('f-name'),
+    'Date: '+v('f-date'),
+    '',
+    'Feedback (what the therapist did well):',
+    v('f-feedback'),
+    '',
+    'Overall rating (1-5): '+(rv.score||'-')
+  ].join('\n');
+}
+function exportData(){
+  const b=new Blob([buildTxt()],{type:'text/plain'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);
+  a.download='ek8818_supervisor_'+(v('f-name')||'anon')+'.txt';a.click();
+}
+function copyAll(){
+  navigator.clipboard.writeText(buildTxt()).then(()=>{
+    const b=document.getElementById('cpBtn');b.textContent='Copied!';b.style.background='#16a34a';
+    setTimeout(()=>{b.textContent='Copy to clipboard';b.style.background='#3b82f6';},2000);
+  });
+}
+
+document.getElementById('f-feedback').addEventListener('input',()=>{updateWC();save();});
+document.getElementById('f-name').addEventListener('input',save);
+document.getElementById('f-date').addEventListener('input',save);
+
+renderTranscript();
+load();
+updateWC();
+</script>
+</body></html>
