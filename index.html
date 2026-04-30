@@ -45,6 +45,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .turn-t{border-left:3px solid var(--acc);background:#faf5ff}
 .turn-c{border-left:3px solid #94a3b8;background:transparent}
 .turn .speaker{font-weight:700;font-size:.72rem;color:var(--mut);margin-right:.35rem}
+.turn-t.ev-th{background:var(--rose);border-left-color:#e11d48;position:relative}
+.turn-t.ev-th:hover .turn-t-tip{display:block}
+.turn-t-tip{display:none;position:absolute;bottom:calc(100% + 2px);left:.55rem;background:#1e293b;color:#fff;padding:.3rem .5rem;border-radius:4px;font-size:.68rem;white-space:nowrap;z-index:30;pointer-events:none;font-weight:500}
 .ev{border-radius:2px;padding:0 1px;cursor:help;position:relative}
 .ev-a{background:var(--amber)}
 .ev-b{background:var(--green)}
@@ -53,7 +56,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .ev-t{background:var(--rose)}
 .ev-tip{display:none;position:absolute;bottom:100%;left:0;background:#1e293b;color:#fff;padding:.3rem .5rem;border-radius:4px;font-size:.68rem;white-space:nowrap;z-index:20;pointer-events:none;font-weight:500}
 .ev:hover .ev-tip{display:block}
-.turn-t-label{font-size:.62rem;font-weight:700;color:#be123c;background:var(--rose);border-left:3px solid #e11d48;padding:.18rem .5rem;margin-bottom:.1rem;border-radius:3px 3px 0 0;display:inline-block;text-transform:uppercase;letter-spacing:.04em}
 /* RIGHT PANEL */
 .rp{height:100vh;overflow-y:auto;padding:1.2rem 1.4rem;background:var(--bg)}
 .step{background:var(--card);border:1px solid var(--brd);border-radius:10px;padding:1rem 1.1rem;margin-bottom:1rem}
@@ -200,17 +202,16 @@ function renderTranscript(){
     h+='<div class="seg-header" data-seg="'+sn+'">Segment '+sn+'</div>';
     const m=SEG_META[String(sn)]||{};
     const intType=(m.int_type&&m.int_type!=='-')?m.int_type:null;
-    let firstTShown=false;
     SEGS[String(sn)].forEach(turn=>{
-      const cls=turn.s==='T'?'turn turn-t':'turn turn-c';
+      let cls=turn.s==='T'?'turn turn-t':'turn turn-c';
+      let tip='';
+      if(turn.s==='T' && intType && domains.t){
+        cls+=' ev-th';
+        tip='<span class="turn-t-tip">Intervention type: '+intType+'</span>';
+      }
       const speaker=turn.s==='T'?'T':'P';
       const inner=highlightSpans(turn.t,sn);
-      if(turn.s==='T' && intType && domains.t && !firstTShown){
-        const tipText='Segment-level therapist intervention type';
-        h+='<div class="turn-t-label" title="'+tipText+'">Therapist intervention type: '+intType+'</div>';
-        firstTShown=true;
-      }
-      h+='<div class="'+cls+'"><span class="speaker">'+speaker+'</span>'+inner+'</div>';
+      h+='<div class="'+cls+'">'+tip+'<span class="speaker">'+speaker+'</span>'+inner+'</div>';
     });
     h+=segMetaPills(sn);
   });
